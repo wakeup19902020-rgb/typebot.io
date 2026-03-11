@@ -352,7 +352,7 @@ const getTypebot = async (startParams: StartParams) => {
     typebotQuery &&
     "typebot" in typebotQuery &&
     (isNotDefined(typebotQuery.lastActivityAt) ||
-      !datesAreOnSameDay(typebotQuery.lastActivityAt, new Date()))
+      !datesAreOnSameDay(new Date(typebotQuery.lastActivityAt), new Date()))
   ) {
     after(async () => {
       await prisma.publicTypebot.update({

@@ -39,7 +39,7 @@ export const {
   },
   events: {
     session: async ({ session }) => {
-      if (!datesAreOnSameDay(session.user.lastActivityAt, new Date())) {
+      if (!datesAreOnSameDay(new Date(session.user.lastActivityAt), new Date())) {
         await prisma.user.updateMany({
           where: { id: session.user.id },
           data: { lastActivityAt: new Date() },
