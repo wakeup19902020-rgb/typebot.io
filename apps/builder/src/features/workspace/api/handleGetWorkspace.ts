@@ -63,9 +63,12 @@ export const handleGetWorkspace = async ({
       currentUserMode: currentUserMode as "read" | "write" | "guest",
     };
   } catch (error) {
-    console.error("[getWorkspace] FULL ERROR:", error);
-    console.error("[getWorkspace] Error message:", error instanceof Error ? error.message : String(error));
-    console.error("[getWorkspace] Error stack:", error instanceof Error ? error.stack : "no stack");
-    throw error;
+    if (error instanceof ORPCError) throw error;
+    const msg = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : "no stack";
+    console.error("[getWorkspace] ERROR:", msg, stack);
+    throw new ORPCError("INTERNAL_SERVER_ERROR", {
+      message: `[DEBUG] ${msg}`,
+    });
   }
 };
