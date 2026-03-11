@@ -33,32 +33,39 @@ export const handleGetWorkspace = async ({
   input: z.infer<typeof getWorkspaceInputSchema>;
   context: { user: Pick<User, "id" | "email"> };
 }) => {
-  const workspace = await prisma.workspace.findFirst({
-    where: { id: workspaceId },
-    include: { members: true },
-  });
-
-  if (
-    !workspace?.lastActivityAt ||
-    !datesAreOnSameDay(new Date(workspace.lastActivityAt), new Date())
-  ) {
-    await prisma.workspace.updateMany({
+  try {
+    const workspace = await prisma.workspace.findFirst({
       where: { id: workspaceId },
-      data: {
-        lastActivityAt: new Date(),
-        inactiveFirstEmailSentAt: null,
-        inactiveSecondEmailSentAt: null,
-      },
+      include: { members: true },
     });
+
+    if (
+      !workspace?.lastActivityAt ||
+      !datesAreOnSameDay(new Date(workspace.lastActivityAt), new Date())
+    ) {
+      await prisma.workspace.updateMany({
+        where: { id: workspaceId },
+        data: {
+          lastActivityAt: new Date(),
+          inactiveFirstEmailSentAt: null,
+          inactiveSecondEmailSentAt: null,
+        },
+      });
+    }
+
+    if (!workspace || isReadWorkspaceFobidden(workspace, user))
+      throw new ORPCError("NOT_FOUND", { message: "Workspace not found" });
+
+    const currentUserMode = getUserModeInWorkspace(user.id, workspace.members);
+
+    return {
+      workspace: inAppWorkspaceSchema.parse(workspace),
+      currentUserMode: currentUserMode as "read" | "write" | "guest",
+    };
+  } catch (error) {
+    console.error("[getWorkspace] FULL ERROR:", error);
+    console.error("[getWorkspace] Error message:", error instanceof Error ? error.message : String(error));
+    console.error("[getWorkspace] Error stack:", error instanceof Error ? error.stack : "no stack");
+    throw error;
   }
-
-  if (!workspace || isReadWorkspaceFobidden(workspace, user))
-    throw new ORPCError("NOT_FOUND", { message: "Workspace not found" });
-
-  const currentUserMode = getUserModeInWorkspace(user.id, workspace.members);
-
-  return {
-    workspace: inAppWorkspaceSchema.parse(workspace),
-    currentUserMode: currentUserMode as "read" | "write" | "guest",
-  };
 };
