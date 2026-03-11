@@ -109,7 +109,12 @@ export const {
         env.DISABLE_SIGNUP &&
         isNewUser &&
         user.email &&
-        !env.ADMIN_EMAIL?.includes(user.email)
+        !(Array.isArray(env.ADMIN_EMAIL)
+          ? env.ADMIN_EMAIL
+          : typeof env.ADMIN_EMAIL === "string"
+            ? (env.ADMIN_EMAIL as string).split(",")
+            : []
+        ).includes(user.email)
       ) {
         const { invitations, workspaceInvitations } =
           await getNewUserInvitations(prisma, user.email);

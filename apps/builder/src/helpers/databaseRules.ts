@@ -36,7 +36,12 @@ export const canReadTypebots = (
   user: Pick<Prisma.User, "email" | "id">,
 ) => ({
   id: typeof typebotIds === "string" ? typebotIds : { in: typebotIds },
-  workspace: env.ADMIN_EMAIL?.some((email) => email === user.email)
+  workspace: (Array.isArray(env.ADMIN_EMAIL)
+    ? env.ADMIN_EMAIL
+    : typeof env.ADMIN_EMAIL === "string"
+      ? (env.ADMIN_EMAIL as string).split(",")
+      : []
+  ).some((email) => email === user.email)
     ? undefined
     : {
         members: {
