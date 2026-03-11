@@ -7,7 +7,7 @@ import { answerInputSchema, answerSchema } from "./answers";
 
 export const resultSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   typebotId: z.string(),
   variables: z.array(variableWithValueSchema),
   isCompleted: z.boolean(),

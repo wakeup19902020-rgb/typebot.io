@@ -10,7 +10,7 @@ export const createApiTokenInputSchema = z.object({
 export const apiTokenWithTokenSchema = z.object({
   id: z.string(),
   name: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   token: z.string(),
 });
 

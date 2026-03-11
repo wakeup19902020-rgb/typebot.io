@@ -5,7 +5,7 @@ import { z } from "zod";
 export const listApiTokensOutputSchema = z.object({
   id: z.string(),
   name: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
 });
 
 export const handleListApiTokens = async ({

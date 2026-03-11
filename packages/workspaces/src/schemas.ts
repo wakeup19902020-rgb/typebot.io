@@ -19,8 +19,8 @@ export const workspaceMemberSchema = z.object({
 
 export const workspaceInvitationSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   email: z.string(),
   type: z.nativeEnum(WorkspaceRole),
 }) satisfies z.ZodType<
@@ -31,18 +31,18 @@ const workspaceSettingsSchema = z.object({});
 
 export const workspaceSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   name: z.string(),
   icon: z.string().nullable(),
   plan: z.nativeEnum(Plan),
   stripeId: z.string().nullable(),
   additionalChatsIndex: z.number(),
   additionalStorageIndex: z.number(),
-  chatsLimitFirstEmailSentAt: z.date().nullable(),
-  chatsLimitSecondEmailSentAt: z.date().nullable(),
-  storageLimitFirstEmailSentAt: z.date().nullable(),
-  storageLimitSecondEmailSentAt: z.date().nullable(),
+  chatsLimitFirstEmailSentAt: z.coerce.date().nullable(),
+  chatsLimitSecondEmailSentAt: z.coerce.date().nullable(),
+  storageLimitFirstEmailSentAt: z.coerce.date().nullable(),
+  storageLimitSecondEmailSentAt: z.coerce.date().nullable(),
   settings: workspaceSettingsSchema.nullable(),
   customChatsLimit: z.number().nullable(),
   customStorageLimit: z.number().nullable(),
@@ -52,9 +52,9 @@ export const workspaceSchema = z.object({
   isPastDue: z.boolean(),
   isVerified: z.boolean().nullable(),
   chatsHardLimit: z.number().nullable(),
-  lastActivityAt: z.date().nullable(),
-  inactiveFirstEmailSentAt: z.date().nullable(),
-  inactiveSecondEmailSentAt: z.date().nullable(),
+  lastActivityAt: z.coerce.date().nullable(),
+  inactiveFirstEmailSentAt: z.coerce.date().nullable(),
+  inactiveSecondEmailSentAt: z.coerce.date().nullable(),
 }) satisfies z.ZodType<Prisma.Workspace>;
 
 export type Workspace = z.infer<typeof workspaceSchema>;

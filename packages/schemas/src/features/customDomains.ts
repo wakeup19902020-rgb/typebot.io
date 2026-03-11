@@ -43,5 +43,5 @@ export const customDomainSchema = z.object({
     .transform((name) => name.toLowerCase())
     .refine((name) => domainNameRegex.test(name)),
   workspaceId: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
 }) satisfies z.ZodType<Prisma.CustomDomain>;

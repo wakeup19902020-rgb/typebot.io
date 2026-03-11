@@ -2,11 +2,11 @@ import { z } from "zod";
 
 export const subscriptionSchema = z.object({
   currentBillingPeriod: z.object({
-    start: z.date(),
-    end: z.date(),
+    start: z.coerce.date(),
+    end: z.coerce.date(),
   }),
   currency: z.enum(["eur", "usd"]),
-  cancelDate: z.date().optional(),
+  cancelDate: z.coerce.date().optional(),
   status: z.enum(["active", "past_due"]),
 });
 

@@ -10,7 +10,7 @@ export const deleteApiTokenInputSchema = z.object({
 export const apiTokenSchema = z.object({
   id: z.string(),
   name: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   token: z.string(),
   ownerId: z.string(),
 });

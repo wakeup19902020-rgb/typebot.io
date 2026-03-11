@@ -137,7 +137,7 @@ export const openAICredentialsSchema = z
   .merge(
     z.object({
       id: z.string(),
-      createdAt: z.date(),
+      createdAt: z.coerce.date(),
       workspaceId: z.string(),
       name: z.string(),
       iv: z.string(),

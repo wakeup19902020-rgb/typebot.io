@@ -6,6 +6,6 @@ export const collaboratorSchema = z.object({
   type: z.nativeEnum(CollaborationType),
   userId: z.string(),
   typebotId: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 }) satisfies z.ZodType<Prisma.CollaboratorsOnTypebots>;

@@ -2,7 +2,7 @@ import type { Prisma } from "@typebot.io/prisma/types";
 import { z } from "zod";
 
 const answerV1Schema = z.object({
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   resultId: z.string(),
   blockId: z.string(),
   groupId: z.string(),

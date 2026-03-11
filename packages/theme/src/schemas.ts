@@ -114,8 +114,8 @@ export const themeTemplateSchema = z.object({
   name: z.string(),
   theme: themeSchema,
   workspaceId: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 }) satisfies z.ZodType<Omit<Prisma.ThemeTemplate, "theme">>;
 
 export const dynamicThemeSchema = z.object({

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const credentialsBaseSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   name: z.string(),
   iv: z.string(),
 });

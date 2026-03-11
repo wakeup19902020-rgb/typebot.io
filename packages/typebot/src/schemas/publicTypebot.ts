@@ -15,9 +15,9 @@ import { edgeSchema } from "./edge";
 export const publicTypebotSchemaV5 = z.object({
   id: z.string(),
   version: z.enum(["3", "4", "5"]),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  lastActivityAt: z.date().nullish(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  lastActivityAt: z.coerce.date().nullish(),
   typebotId: z.string(),
   groups: z.array(groupV5Schema),
   events: z.null(),

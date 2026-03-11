@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const logSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
   resultId: z.string(),
   status: z.string(),
   description: z.string(),

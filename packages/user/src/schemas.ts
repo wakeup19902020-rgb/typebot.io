@@ -17,12 +17,12 @@ export type GroupTitlesAutoGeneration = z.infer<
 
 export const userSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  lastActivityAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+  lastActivityAt: z.coerce.date(),
   name: z.string().nullable(),
   email: z.string(),
-  emailVerified: z.date().nullable(),
+  emailVerified: z.coerce.date().nullable(),
   image: z.string().nullable(),
   company: z.string().nullable(),
   onboardingCategories: z.array(z.string()),
@@ -32,7 +32,7 @@ export const userSchema = z.object({
   displayedInAppNotifications: displayedInAppNotificationsSchema.nullable(),
   groupTitlesAutoGeneration: groupTitlesAutoGenerationSchema.nullable(),
   preferredLanguage: z.string().nullable(),
-  termsAcceptedAt: z.date().nullable(),
+  termsAcceptedAt: z.coerce.date().nullable(),
 }) satisfies z.ZodType<Prisma.User>;
 export type User = z.infer<typeof userSchema>;
 

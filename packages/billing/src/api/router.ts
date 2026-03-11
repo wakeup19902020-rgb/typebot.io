@@ -61,7 +61,7 @@ export const billingRouter = {
       tags: ["Billing"],
     })
     .input(getUsageInputSchema)
-    .output(z.object({ totalChatsUsed: z.number(), resetsAt: z.date() }))
+    .output(z.object({ totalChatsUsed: z.number(), resetsAt: z.coerce.date() }))
     .handler(handleGetUsage),
 
   listInvoices: authenticatedProcedure

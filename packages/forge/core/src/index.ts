@@ -131,7 +131,7 @@ export const parseBlockCredentials = <
   return z.object({
     id: z.string(),
     type: z.literal(blockId),
-    createdAt: z.date(),
+    createdAt: z.coerce.date(),
     name: z.string(),
     iv: z.string(),
     data:

@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const folderSchema = z.object({
   id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   name: z.string(),
   parentFolderId: z.string().nullable(),
   workspaceId: z.string(),
