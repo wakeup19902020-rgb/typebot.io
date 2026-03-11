@@ -40,7 +40,7 @@ export const handleGetWorkspace = async ({
 
   if (
     !workspace?.lastActivityAt ||
-    !datesAreOnSameDay(workspace.lastActivityAt, new Date())
+    !datesAreOnSameDay(new Date(workspace.lastActivityAt), new Date())
   ) {
     await prisma.workspace.updateMany({
       where: { id: workspaceId },
