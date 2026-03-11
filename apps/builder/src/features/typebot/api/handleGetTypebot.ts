@@ -106,8 +106,10 @@ export const handleGetTypebot = async ({
       currentUserMode: getTypebotAccessRight(user, existingTypebot),
     };
   } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[getTypebot] parse error:", msg, err);
     throw new ORPCError("INTERNAL_SERVER_ERROR", {
-      message: "Failed to parse typebot",
+      message: `[DEBUG] Failed to parse typebot: ${msg}`,
       cause: err,
     });
   }
