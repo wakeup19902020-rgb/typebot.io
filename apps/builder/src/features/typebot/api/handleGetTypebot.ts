@@ -108,8 +108,8 @@ export const handleGetTypebot = async ({
   } catch (err) {
     let detail = err instanceof Error ? err.message : String(err);
     if (err instanceof z.ZodError) {
-      detail = err.errors
-        .map((e) => `${e.path.join(".")}: ${e.code} — ${e.message}`)
+      detail = err.issues
+        .map((e: z.ZodIssue) => `${e.path.join(".")}: ${e.code} — ${e.message}`)
         .join(" | ");
     }
     throw new ORPCError("INTERNAL_SERVER_ERROR", {
