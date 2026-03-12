@@ -106,11 +106,14 @@ export const handleGetTypebot = async ({
       currentUserMode: getTypebotAccessRight(user, existingTypebot),
     };
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("[getTypebot] parse error:", msg, err);
+    let detail = err instanceof Error ? err.message : String(err);
+    if (err instanceof z.ZodError) {
+      detail = err.errors
+        .map((e) => `${e.path.join(".")}: ${e.code} — ${e.message}`)
+        .join(" | ");
+    }
     throw new ORPCError("INTERNAL_SERVER_ERROR", {
-      message: `[DEBUG] Failed to parse typebot: ${msg}`,
-      cause: err,
+      message: `[DEBUG] ${detail}`,
     });
   }
 };
